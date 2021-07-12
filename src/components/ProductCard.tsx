@@ -1,8 +1,13 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 
-export const ProductCard = () => {
+interface Props {
+  product: ProductsDBResponse;
+}
+
+export const ProductCard = ({product}: Props) => {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.imageContainer}>
@@ -18,8 +23,8 @@ export const ProductCard = () => {
       </View>
       <View style={styles.informationContainer}>
         <View>
-          <Text style={styles.title}>Brown Jacket</Text>
-          <Text style={styles.subtitle}>695.6</Text>
+          <Text style={styles.title}>{product.title}</Text>
+          <Text style={styles.subtitle}>{product.price}</Text>
         </View>
         <Icon name="star-outline" size={20} color="black" />
       </View>
@@ -30,11 +35,12 @@ export const ProductCard = () => {
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: 'white',
-    width: 180,
+    width: 160,
     height: 240,
     padding: 10,
     borderRadius: 12,
     shadowColor: '#000',
+    margin: 14,
     shadowOffset: {
       width: 0,
       height: 4,
