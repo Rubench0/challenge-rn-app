@@ -1,13 +1,26 @@
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { Navigator } from './src/stack/Navigator'
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {Navigator} from './src/stack/Navigator';
+import {createStore} from 'redux';
+import reducer from './src/reducers/index';
+import {Provider} from 'react-redux';
 
 const App = () => {
-  return (
-    <NavigationContainer>
-      <Navigator />
-    </NavigationContainer>
-  )
-}
+  const initialState = {
+    products: [],
+    favs: [],
+    cart: [],
+  };
 
-export default App
+  const store = createStore(reducer, initialState);
+
+  return (
+    <Provider store={store}>
+      <NavigationContainer>
+        <Navigator />
+      </NavigationContainer>
+    </Provider>
+  );
+};
+
+export default App;

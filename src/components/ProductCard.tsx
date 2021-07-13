@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {ProductsDBResponse} from '../interfaces/ProductsInterface';
+import {changeTitle} from '../helpers/changeTitle';
 
 interface Props {
   product: ProductsDBResponse;
@@ -13,7 +14,7 @@ export const ProductCard = ({product}: Props) => {
       <View style={styles.imageContainer}>
         <Image
           source={{
-            uri: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
+            uri: `${product.image}`,
           }}
           style={{
             flex: 1,
@@ -23,7 +24,7 @@ export const ProductCard = ({product}: Props) => {
       </View>
       <View style={styles.informationContainer}>
         <View>
-          <Text style={styles.title}>{product.title}</Text>
+          <Text style={styles.title}>{changeTitle(product.title)}</Text>
           <Text style={styles.subtitle}>{product.price}</Text>
         </View>
         <Icon name="star-outline" size={20} color="black" />

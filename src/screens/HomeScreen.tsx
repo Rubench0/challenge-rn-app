@@ -1,8 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image, Text, View, FlatList} from 'react-native';
 import {ProductCard} from '../components/ProductCard';
+import {connect} from 'react-redux';
+import {ProductsDBResponse} from '../interfaces/ProductsInterface';
+import storeDB from '../api/storeDB';
 
-export const HomeScreen = () => {
+const HomeScreen = ({products}: any) => {
+  const [items, setItems] = useState([]);
+
+  const chargeProducts = async () => {
+    const data = storeDB.get('/products');
+    const resp = await data;
+    setItems(resp.data);
+    console.log(items);
+  };
+
+  useEffect(() => {
+    chargeProducts();
+  }, []);
+
   const [numbers, setstate] = useState([
     {
       title: 'Jacket Baige',
@@ -21,7 +37,7 @@ export const HomeScreen = () => {
   return (
     <View>
       <FlatList
-        data={numbers}
+        data={items}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}: any) => <ProductCard product={item} />}
         horizontal={false}
@@ -30,3 +46,9 @@ export const HomeScreen = () => {
     </View>
   );
 };
+
+const mapStateToProps = (state: any) => ({
+  products: state.products,
+});
+
+export default connect(mapStateToProps)(HomeScreen);
