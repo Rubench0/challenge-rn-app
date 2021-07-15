@@ -4,6 +4,7 @@ import {Navigator} from './src/stack/Navigator';
 import {createStore} from 'redux';
 import reducer from './src/reducers/index';
 import {Provider} from 'react-redux';
+import {Tabs} from './src/stack/Tabs';
 
 const App = () => {
   const initialState = {

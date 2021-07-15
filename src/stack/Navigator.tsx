@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import {DetailScreen} from '../screens/DetailScreen';
 import {StyleSheet} from 'react-native';
+import {Tabs} from './Tabs';
 
 const Stack = createStackNavigator();
 
@@ -12,11 +13,10 @@ export const Navigator = () => {
       screenOptions={{
         headerShown: false,
         cardStyle: {
-          backgroundColor: 'white',
-          margin: 12,
+          backgroundColor: '#F1D4D4',
         },
       }}>
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="Tabs" component={Tabs} />
       <Stack.Screen name="DetailScreen" component={DetailScreen} />
     </Stack.Navigator>
   );

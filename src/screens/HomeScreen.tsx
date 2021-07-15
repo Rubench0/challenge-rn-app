@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {Image, Text, View, FlatList} from 'react-native';
+import {Image, Text, View, FlatList, Button} from 'react-native';
 import {ProductCard} from '../components/ProductCard';
 import {connect} from 'react-redux';
 import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 import storeDB from '../api/storeDB';
 
-const HomeScreen = ({products}: any) => {
+const HomeScreen = ({navigation}: any) => {
   const [items, setItems] = useState([]);
 
   const chargeProducts = async () => {
