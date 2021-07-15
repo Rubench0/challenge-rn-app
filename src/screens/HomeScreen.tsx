@@ -35,7 +35,16 @@ const HomeScreen = ({navigation}: any) => {
   ]);
 
   return (
-    <View>
+    <View style={{marginBottom: 60}}>
+      <Image
+        source={{
+          uri: 'https://i.ibb.co/k4xNVwg/The-Fake-Store.png',
+        }}
+        style={{
+          height: 60,
+          width: 380,
+        }}
+      />
       <FlatList
         data={items}
         keyExtractor={item => item.id.toString()}
