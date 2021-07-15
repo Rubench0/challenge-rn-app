@@ -4,8 +4,14 @@ import HomeScreen from '../screens/HomeScreen';
 import {DetailScreen} from '../screens/DetailScreen';
 import {StyleSheet} from 'react-native';
 import {Tabs} from './Tabs';
+import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 
-const Stack = createStackNavigator();
+export type RootStackParams = {
+  HomeScreen: undefined;
+  DetailScreen: ProductsDBResponse;
+};
+
+const Stack = createStackNavigator<RootStackParams>();
 
 export const Navigator = () => {
   return (

@@ -73,7 +73,7 @@ export const Tabs = () => {
         name="Cart"
         component={CartScreen}
       />
-      <Tab.Screen name="Fav" component={DetailScreen} />
+      <Tab.Screen name="Fav" component={CartScreen} />
     </Tab.Navigator>
   );
 };
@@ -84,12 +84,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -24,
     padding: 10,
-    borderRadius: 22,
+    borderRadius: 25,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 4,
     },
+    borderWidth: 2,
+    borderColor: '#CC0E74',
     shadowOpacity: 0.3,
     shadowRadius: 4.65,
 

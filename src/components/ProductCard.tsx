@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 import {changeTitle} from '../helpers/changeTitle';
@@ -9,9 +10,13 @@ interface Props {
 }
 
 export const ProductCard = ({product}: Props) => {
+  const navigator = useNavigation();
+
   return (
     <View style={styles.cardContainer}>
-      <View style={styles.imageContainer}>
+      <TouchableOpacity
+        onPress={() => navigator.navigate('DetailScreen', product)}
+        style={styles.imageContainer}>
         <Image
           source={{
             uri: `${product.image}`,
@@ -21,11 +26,11 @@ export const ProductCard = ({product}: Props) => {
             resizeMode: 'contain',
           }}
         />
-      </View>
+      </TouchableOpacity>
       <View style={styles.informationContainer}>
         <View>
           <Text style={styles.title}>{changeTitle(product.title)}</Text>
-          <Text style={styles.subtitle}>{product.price}</Text>
+          <Text style={styles.subtitle}>$ {product.price}</Text>
         </View>
         <Icon name="star-outline" size={20} color="black" />
       </View>
