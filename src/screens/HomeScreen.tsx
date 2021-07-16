@@ -10,8 +10,9 @@ import {
 import {ProductCard} from '../components/ProductCard';
 import {connect} from 'react-redux';
 import storeDB from '../api/storeDB';
+import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 
-const HomeScreen = ({products}: any) => {
+const HomeScreen = ({products, addToFav}: any) => {
   const [items, setItems] = useState([]);
 
   const chargeProducts = async () => {
@@ -41,7 +42,9 @@ const HomeScreen = ({products}: any) => {
         <FlatList
           data={items}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}: any) => <ProductCard product={item} />}
+          renderItem={({item}: any) => (
+            <ProductCard product={item} addToFav={addToFav} />
+          )}
           horizontal={false}
           numColumns={2}
         />
@@ -63,4 +66,13 @@ const mapStateToProps = (state: any) => ({
   products: state.products,
 });
 
-export default connect(mapStateToProps)(HomeScreen);
+const mapDispatchToProps = (dispatch: any) => ({
+  addToFav(item: any) {
+    dispatch({
+      type: 'ADD_TO_FAV',
+      payload: item,
+    });
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

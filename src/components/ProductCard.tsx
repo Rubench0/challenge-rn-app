@@ -7,9 +7,10 @@ import {changeTitle} from '../helpers/changeTitle';
 
 interface Props {
   product: ProductsDBResponse;
+  addTocart: () => void;
 }
 
-export const ProductCard = ({product}: Props) => {
+export const ProductCard = ({product, addToFav}: any) => {
   const navigator = useNavigation();
 
   return (
@@ -32,7 +33,16 @@ export const ProductCard = ({product}: Props) => {
           <Text style={styles.title}>{changeTitle(product.title)}</Text>
           <Text style={styles.subtitle}>$ {product.price}</Text>
         </View>
-        <Icon name="star-outline" size={20} color="black" />
+        <TouchableOpacity
+          onPress={() => addToFav(product)}
+          style={{
+            backgroundColor: '#eccdcd',
+            padding: 3,
+            borderRadius: 14,
+            alignItems: 'center',
+          }}>
+          <Icon name="heart-outline" size={20} color="red" />
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -5,6 +5,7 @@ import {DetailScreen} from '../screens/DetailScreen';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {CartScreen} from '../screens/CartScreen';
+import FavScreen from '../screens/FavScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -73,7 +74,7 @@ export const Tabs = () => {
         name="Cart"
         component={CartScreen}
       />
-      <Tab.Screen name="Fav" component={CartScreen} />
+      <Tab.Screen name="Fav" component={FavScreen} />
     </Tab.Navigator>
   );
 };
