@@ -12,14 +12,13 @@ import {connect} from 'react-redux';
 import storeDB from '../api/storeDB';
 import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 
-const HomeScreen = ({products, addToFav}: any) => {
+const HomeScreen = ({favorites, addToFav}: any) => {
   const [items, setItems] = useState([]);
 
   const chargeProducts = async () => {
     const data = storeDB.get('/products');
     const resp = await data;
     setItems(resp.data);
-    console.log(items);
   };
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const HomeScreen = ({products, addToFav}: any) => {
           data={items}
           keyExtractor={item => item.id.toString()}
           renderItem={({item}: any) => (
-            <ProductCard product={item} addToFav={addToFav} />
+            <ProductCard product={item} fav={favorites} />
           )}
           horizontal={false}
           numColumns={2}
@@ -62,17 +61,6 @@ const HomeScreen = ({products, addToFav}: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  products: state.products,
-});
+const mapStateToProps = (state: any) => ({});
 
-const mapDispatchToProps = (dispatch: any) => ({
-  addToFav(item: any) {
-    dispatch({
-      type: 'ADD_TO_FAV',
-      payload: item,
-    });
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default connect(mapStateToProps)(HomeScreen);

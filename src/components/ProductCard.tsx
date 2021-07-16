@@ -1,17 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 import {changeTitle} from '../helpers/changeTitle';
+import {useRoute} from '@react-navigation/native';
+import {connect, DefaultRootState, useDispatch, useSelector} from 'react-redux';
 
 interface Props {
   product: ProductsDBResponse;
   addTocart: () => void;
 }
 
-export const ProductCard = ({product, addToFav}: any) => {
+export const ProductCard = ({product, navigation}: any) => {
+  const favorites = useSelector((state: any) => state.favs);
+
   const navigator = useNavigation();
+  const dispatch = useDispatch();
+  const route = useRoute();
 
   return (
     <View style={styles.cardContainer}>
@@ -33,16 +39,39 @@ export const ProductCard = ({product, addToFav}: any) => {
           <Text style={styles.title}>{changeTitle(product.title)}</Text>
           <Text style={styles.subtitle}>$ {product.price}</Text>
         </View>
-        <TouchableOpacity
-          onPress={() => addToFav(product)}
-          style={{
-            backgroundColor: '#eccdcd',
-            padding: 3,
-            borderRadius: 14,
-            alignItems: 'center',
-          }}>
-          <Icon name="heart-outline" size={20} color="red" />
-        </TouchableOpacity>
+        {route.name === 'Fav' ? (
+          <TouchableOpacity
+            onPress={() =>
+              dispatch({
+                type: 'REMOVE_FROM_FAV',
+                payload: product,
+              })
+            }
+            style={{
+              backgroundColor: '#eccdcd',
+              padding: 3,
+              borderRadius: 14,
+              alignItems: 'center',
+            }}>
+            <Icon name="trash-outline" size={20} color="black" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={() =>
+              dispatch({
+                type: 'ADD_TO_FAV',
+                payload: product,
+              })
+            }
+            style={{
+              backgroundColor: '#eccdcd',
+              padding: 3,
+              borderRadius: 14,
+              alignItems: 'center',
+            }}>
+            <Icon name="heart-outline" size={20} color="red" />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

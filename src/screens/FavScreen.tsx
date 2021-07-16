@@ -4,8 +4,6 @@ import {connect} from 'react-redux';
 import {ProductCard} from '../components/ProductCard';
 
 const FavScreen = ({favorites}: any) => {
-  console.log(favorites);
-
   return (
     <View>
       <FlatList
