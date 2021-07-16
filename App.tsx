@@ -8,7 +8,12 @@ import {Tabs} from './src/stack/Tabs';
 
 const App = () => {
   const initialState = {
-    products: [],
+    products: [
+      {
+        name: 'Jose',
+        apellido: 'Perez',
+      },
+    ],
     favs: [],
     cart: [],
   };

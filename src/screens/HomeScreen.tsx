@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {Image, Text, View, FlatList, Button} from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  FlatList,
+  Button,
+  ActivityIndicator,
+} from 'react-native';
 import {ProductCard} from '../components/ProductCard';
 import {connect} from 'react-redux';
-import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 import storeDB from '../api/storeDB';
 
-const HomeScreen = ({navigation}: any) => {
+const HomeScreen = ({products}: any) => {
   const [items, setItems] = useState([]);
 
   const chargeProducts = async () => {
@@ -19,23 +25,8 @@ const HomeScreen = ({navigation}: any) => {
     chargeProducts();
   }, []);
 
-  const [numbers, setstate] = useState([
-    {
-      title: 'Jacket Baige',
-      price: 653,
-      image: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
-      id: 1,
-    },
-    {
-      title: 'Jacket Baige',
-      price: 653,
-      image: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
-      id: 2,
-    },
-  ]);
-
   return (
-    <View style={{marginBottom: 60}}>
+    <View style={{marginBottom: 10, flex: 1}}>
       <Image
         source={{
           uri: 'https://i.ibb.co/k4xNVwg/The-Fake-Store.png',
@@ -45,13 +36,25 @@ const HomeScreen = ({navigation}: any) => {
           width: 380,
         }}
       />
-      <FlatList
-        data={items}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}: any) => <ProductCard product={item} />}
-        horizontal={false}
-        numColumns={2}
-      />
+
+      {items.length > 0 ? (
+        <FlatList
+          data={items}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}: any) => <ProductCard product={item} />}
+          horizontal={false}
+          numColumns={2}
+        />
+      ) : (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <ActivityIndicator size="large" color="#790C5A" />
+        </View>
+      )}
     </View>
   );
 };
