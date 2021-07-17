@@ -12,12 +12,17 @@ interface Props {
   addTocart: () => void;
 }
 
-export const ProductCard = ({product, navigation}: any) => {
+export const ProductCard = ({product}: any) => {
   const favorites = useSelector((state: any) => state.favs);
-
   const navigator = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute();
+
+  //Saber si el Product esta en Favoritos
+  let exist: any;
+  if (favorites) {
+    exist = favorites.find((item: any) => item.title === product.title);
+  }
 
   return (
     <View style={styles.cardContainer}>
@@ -57,19 +62,29 @@ export const ProductCard = ({product, navigation}: any) => {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            onPress={() =>
-              dispatch({
-                type: 'ADD_TO_FAV',
-                payload: product,
-              })
-            }
+            onPress={() => {
+              if (exist != undefined) {
+                dispatch({
+                  type: 'ALREADY_THERE',
+                });
+              } else {
+                dispatch({
+                  type: 'ADD_TO_FAV',
+                  payload: product,
+                });
+              }
+            }}
             style={{
               backgroundColor: '#eccdcd',
               padding: 3,
               borderRadius: 14,
               alignItems: 'center',
             }}>
-            <Icon name="heart-outline" size={20} color="red" />
+            {exist != undefined ? (
+              <Icon name="heart" size={20} color="red" />
+            ) : (
+              <Icon name="heart-outline" size={20} color="red" />
+            )}
           </TouchableOpacity>
         )}
       </View>

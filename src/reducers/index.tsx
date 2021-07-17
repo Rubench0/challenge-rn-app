@@ -27,6 +27,10 @@ const reducer = (state: any, action: any) => {
       };
     }
 
+    case 'ALREADY_THERE': {
+      console.log('This item is already there');
+    }
+
     default:
       return state;
   }
