@@ -1,24 +1,29 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
-import {connect} from 'react-redux';
+import {View, FlatList} from 'react-native';
+import {useSelector} from 'react-redux';
+import {AddProduct} from '../components/AddProduct';
 import {ProductCard} from '../components/ProductCard';
 
-const FavScreen = ({favorites}: any) => {
+export const FavScreen = () => {
+  const favorites = useSelector((state: any) => state.favs);
+
   return (
-    <View>
-      <FlatList
-        data={favorites}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}: any) => <ProductCard product={item} />}
-        horizontal={false}
-        numColumns={2}
-      />
+    <View
+      style={{
+        flex: 1,
+        margin: 14,
+      }}>
+      {favorites.length > 0 ? (
+        <FlatList
+          data={favorites}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}: any) => <ProductCard product={item} />}
+          horizontal={false}
+          numColumns={2}
+        />
+      ) : (
+        <AddProduct title="Add your first Product" />
+      )}
     </View>
   );
 };
-
-const mapStateToProps = (state: any) => ({
-  favorites: state.favs,
-});
-
-export default connect(mapStateToProps)(FavScreen);

@@ -1,20 +1,19 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 import {changeTitle} from '../helpers/changeTitle';
 import {useRoute} from '@react-navigation/native';
-import {connect, DefaultRootState, useDispatch, useSelector} from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
   product: ProductsDBResponse;
-  addTocart: () => void;
 }
 
-export const ProductCard = ({product}: any) => {
+export const ProductCard = ({product}: Props) => {
   const favorites = useSelector((state: any) => state.favs);
-  const navigator = useNavigation();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute();
 
@@ -27,7 +26,7 @@ export const ProductCard = ({product}: any) => {
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity
-        onPress={() => navigator.navigate('DetailScreen', product)}
+        onPress={() => navigation.navigate('DetailScreen', product)}
         style={styles.imageContainer}>
         <Image
           source={{
@@ -52,34 +51,18 @@ export const ProductCard = ({product}: any) => {
                 payload: product,
               })
             }
-            style={{
-              backgroundColor: '#eccdcd',
-              padding: 3,
-              borderRadius: 14,
-              alignItems: 'center',
-            }}>
+            style={styles.buttonContainer}>
             <Icon name="trash-outline" size={20} color="black" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
             onPress={() => {
-              if (exist != undefined) {
-                dispatch({
-                  type: 'ALREADY_THERE',
-                });
-              } else {
-                dispatch({
-                  type: 'ADD_TO_FAV',
-                  payload: product,
-                });
-              }
+              dispatch({
+                type: 'ADD_TO_FAV',
+                payload: product,
+              });
             }}
-            style={{
-              backgroundColor: '#eccdcd',
-              padding: 3,
-              borderRadius: 14,
-              alignItems: 'center',
-            }}>
+            style={styles.buttonContainer}>
             {exist != undefined ? (
               <Icon name="heart" size={20} color="red" />
             ) : (
@@ -130,5 +113,11 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: 'black',
     opacity: 0.5,
+  },
+  buttonContainer: {
+    backgroundColor: '#eccdcd',
+    padding: 3,
+    borderRadius: 14,
+    alignItems: 'center',
   },
 });

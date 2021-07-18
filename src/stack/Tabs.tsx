@@ -1,15 +1,18 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
-import {DetailScreen} from '../screens/DetailScreen';
-import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import {HomeScreen} from '../screens/HomeScreen';
 import {CartScreen} from '../screens/CartScreen';
-import FavScreen from '../screens/FavScreen';
+import {FavScreen} from '../screens/FavScreen';
+import {StyleSheet, View} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 export const Tabs = () => {
+  const cart = useSelector((state: any) => state.cart);
+
   return (
     <Tab.Navigator
       sceneContainerStyle={{
@@ -56,10 +59,7 @@ export const Tabs = () => {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen
         options={{
-          tabBarBadge: 3,
-          tabBarBadgeStyle: {
-            // backgroundColor: 'blue',
-          },
+          tabBarBadge: `${cart.length}`,
           tabBarIcon: ({color, size}) => (
             <View style={styles.specialTab}>
               <Icon

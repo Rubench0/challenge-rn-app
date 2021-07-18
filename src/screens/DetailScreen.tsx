@@ -1,4 +1,5 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import {
   Dimensions,
   Image,
@@ -17,6 +18,7 @@ const screemHeight = Dimensions.get('screen').height;
 interface Props extends StackScreenProps<RootStackParams, 'DetailScreen'> {}
 
 export const DetailScreen = ({route, navigation}: Props) => {
+  const dispatch = useDispatch();
   const item = route.params;
 
   return (
@@ -25,17 +27,37 @@ export const DetailScreen = ({route, navigation}: Props) => {
         <Image source={{uri: item.image}} style={styles.image} />
       </View>
 
+      {/*Titulo*/}
       <View style={styles.marginContainer}>
         <Text style={styles.title}>{item.title}</Text>
       </View>
 
+      {/* Precio y Categoria */}
       <View style={{...styles.marginContainer, ...styles.section}}>
         <Text style={styles.price}>${item.price}</Text>
         <Text style={styles.price}>{item.category}</Text>
       </View>
 
+      {/* Descripcion */}
       <View style={styles.marginContainer}>
         <Text style={styles.description}>{item.description}</Text>
+      </View>
+
+      {/* ADD TO CART */}
+      <View style={styles.marginContainer}>
+        <TouchableOpacity
+          onPress={() => [
+            dispatch({
+              type: 'ADD_TO_CART',
+              payload: item,
+            }),
+            navigation.navigate('Tabs'),
+          ]}
+          style={styles.addToCart}>
+          <Text style={{fontWeight: 'bold', color: 'white', letterSpacing: 3}}>
+            ADD TO CART
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/*Boton para cerrar*/}
@@ -112,5 +134,13 @@ const styles = StyleSheet.create({
       height: 10,
     },
     shadowOpacity: 0.24,
+  },
+  addToCart: {
+    backgroundColor: '#790C5A',
+    flex: 1,
+    padding: 12,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginVertical: 12,
   },
 });

@@ -1,28 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Image,
-  Text,
-  View,
-  FlatList,
-  Button,
-  ActivityIndicator,
-} from 'react-native';
-import {ProductCard} from '../components/ProductCard';
-import {connect} from 'react-redux';
 import storeDB from '../api/storeDB';
-import {ProductsDBResponse} from '../interfaces/ProductsInterface';
 
-const HomeScreen = ({favorites, addToFav}: any) => {
+import {Image, View, FlatList, ActivityIndicator} from 'react-native';
+import {ProductCard} from '../components/ProductCard';
+
+export const HomeScreen = ({favorites}: any) => {
   const [items, setItems] = useState([]);
 
-  const chargeProducts = async () => {
+  const loadProducts = async () => {
     const data = storeDB.get('/products');
     const resp = await data;
     setItems(resp.data);
   };
 
   useEffect(() => {
-    chargeProducts();
+    loadProducts();
   }, []);
 
   return (
@@ -41,11 +33,10 @@ const HomeScreen = ({favorites, addToFav}: any) => {
         <FlatList
           data={items}
           keyExtractor={item => item.id.toString()}
-          renderItem={({item}: any) => (
-            <ProductCard product={item} fav={favorites} />
-          )}
+          renderItem={({item}: any) => <ProductCard product={item} />}
           horizontal={false}
           numColumns={2}
+          showsHorizontalScrollIndicator={false}
         />
       ) : (
         <View
@@ -60,7 +51,3 @@ const HomeScreen = ({favorites, addToFav}: any) => {
     </View>
   );
 };
-
-const mapStateToProps = (state: any) => ({});
-
-export default connect(mapStateToProps)(HomeScreen);
